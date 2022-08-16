@@ -149,3 +149,37 @@ wday(my_birthday, label = TRUE)
 week(teddy_bday)
 week(my_birthday)
 ```
+
+```{r}
+# create a data set
+urchin_counts <- tribble(
+  ~date, ~species, ~size_mm,
+  "10/3/2020", "purple", 55,
+  "10/4/2020", "red", 48,
+  "11/17/2020", "red", 67
+)
+
+# convert the date values to ISO 6801 (date class), pull out year, month, and day and add them as separate columns and store it in another data set named urchin_ymd
+urchin_ymd <- urchin_counts |> 
+  mutate(date = mdy(date)) |> 
+  mutate(year = year(date),
+         month = month(date),
+         day = day(date))
+```
+
+```{r}
+day_1 <- ymd("2020-01-06")
+day_2 <- ymd("2020-05-18")
+
+# create the interval between the two dates and store it as time_interval
+time_interval <- interval(day_1, day_2)
+
+# in years, what is the length of the time interval
+time_length(time_interval, "year")
+
+# in days, what is the length of the time interval
+time_length(time_interval, "day")
+
+# in seconds, what is the length of the time interval
+time_length(time_interval, "second")
+```
