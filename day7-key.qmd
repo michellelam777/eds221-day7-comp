@@ -84,3 +84,68 @@ penguins_filtered <- penguins |>
   mutate(body_mass_kg = body_mass_g/1000) |> 
   rename(location = island)
 ```
+
+## Dates and times with `lubridate`
+
+```{r}
+my_date <- "03-15-1998"
+
+# define order mdy, ymd, dmy
+lubridate::mdy(my_date)
+
+my_date <- "11/7/2003"
+lubridate::dmy(my_date)
+
+my_date <- "08-Jun-1974"
+lubridate::dmy(my_date)
+
+my_date <- "19610518"
+my_real_date <- lubridate::ymd(my_date)
+```
+
+```{r}
+lubridate::ymd("1942-08-30")
+
+lubridate::mdy("09/22/84")
+```
+
+```{r}
+time <- "2020-08-12 11:18"
+time <- ymd_hm(time)
+time
+class(time)
+# class of data with time in it will be POSIXct, class of data with only dates will be date
+```
+
+```{r}
+# use with_tz to convert time zones
+with_tz(time, "America/Los_Angeles")
+
+with_tz(time, "Indian/Maldives")
+
+with_tz(time, "Europe/Paris")
+
+my_time <- lubridate::ymd_hms(time)
+
+# Parse out individual components of your date time value
+year(my_time)
+day(my_time)
+month(my_time)
+hour(my_time)
+minute(my_time)
+second(my_time)
+```
+
+```{r}
+teddy_bday <- lubridate::ymd("20170615")
+
+# what day of the week is your date
+wday(teddy_bday, label = TRUE)
+
+my_birthday <- lubridate::ymd("1995-07-07")
+wday(my_birthday, label = TRUE)
+
+# what week of the year
+week(teddy_bday)
+week(my_birthday)
+```
