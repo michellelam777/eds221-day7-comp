@@ -183,3 +183,83 @@ time_length(time_interval, "day")
 # in seconds, what is the length of the time interval
 time_length(time_interval, "second")
 ```
+
+## stringr for working with strings
+
+### str_detect
+
+```{r}
+my_string <- "Teddy loves eating salmon and socks."
+
+my_string |> 
+  str_detect("love")
+
+my_string |> 
+  str_detect("pup")
+
+my_string <- c("burrito", "fish taco", "taco salad")
+my_string |> 
+  str_detect("fish")
+```
+
+```{r}
+# from the star wars data frome, only keep rows where the pattern Skywalker exists in the name column
+skywalkers <- starwars |> 
+  filter(str_detect(name, pattern = "Skywalker"))
+
+# create a subset where Maul shows up in the name column
+maul <- starwars |> 
+  filter(str_detect(name, pattern = "Maul"))
+
+# create a subset where blue shows up in the eye color, either alone or in combination
+# these are case senstitive
+blue_eyes <- starwars |> 
+  filter(str_detect(eye_color, pattern = "blue"))
+
+```
+
+### str_repalce to replace string patterns
+
+```{r}
+firewalkers <- starwars |> 
+  mutate(name_2 = str_replace(name, pattern = "Sky", replacement = "Fire"))
+```
+
+```{r}
+feedback <- c("  I ate  some  nachos", "Wednesday   morning  ")
+# str_trim removes excess white space before first character and after last character in a string
+str_trim(feedback)
+
+# str_squish removes excess white space before first character and after last character in a string AND in between words
+str_squish(feedback)
+
+# str_to*
+# all lower case
+str_to_lower(feedback)
+
+# all upper case
+str_to_upper(feedback)
+
+# first letter of word is capitalized
+str_to_title(feedback)
+
+# follow sentence structure with first word first letter capitalized
+str_to_sentence(feedback)
+
+
+# From star wars, create a new data frame starwars_lc that adds a new column called name_lower containing character names converted to all lowercase
+starwars_lc <- starwars |> 
+  mutate(name_lower = str_to_lower(name))
+```
+
+### case_when()
+
+```{r}
+# create a new column that outputs different values based on the corresponding value in the species column using case_when()
+starwars_robot <- starwars |> 
+  mutate(robot_status = case_when(
+    species == "Droid" ~ "A ROBOT!!!",
+    species == "Human" ~ "It's a human!",
+    TRUE ~ "This is something else."
+  ))
+```
